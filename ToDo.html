@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        .todo-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .todo-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4c99af;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .task-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-item button {
+            background-color: #f44336;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .task-item button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="todo-container">
+        <h2>To-Do List</h2>
+        <input type="text" id="task-input" placeholder="Enter a new task">
+        <button id="add-task-btn">Add Task</button>
+        <ul class="task-list" id="task-list"></ul>
+    </div>
+
+    <script>
+        // Get references to DOM elements
+        const taskInput = document.getElementById('task-input');
+        const addTaskBtn = document.getElementById('add-task-btn');
+        const taskList = document.getElementById('task-list');
+
+        // Function to create a new task item
+        function createTaskItem(taskText) {
+            const li = document.createElement('li');
+            li.classList.add('task-item');
+
+            // Create the task text
+            const taskTextElement = document.createElement('span');
+            taskTextElement.textContent = taskText;
+            li.appendChild(taskTextElement);
+
+            // Create the remove button
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'Remove';
+            removeBtn.addEventListener('click', () => {
+                li.remove(); // Remove the task item when clicked
+            });
+            li.appendChild(removeBtn);
+
+            return li;
+        }
+
+        // Add task button event listener
+        addTaskBtn.addEventListener('click', () => {
+            const taskText = taskInput.value.trim(); // Get and trim input value
+
+            if (taskText !== '') {
+                const taskItem = createTaskItem(taskText); // Create a new task item
+                taskList.appendChild(taskItem); // Append task item to the list
+                taskInput.value = ''; // Clear input field after adding the task
+            }
+        });
+
+        // Allow pressing 'Enter' to add a task
+        taskInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                addTaskBtn.click(); // Trigger the Add Task button click
+            }
+        });
+    </script>
+</body>
+</html>
